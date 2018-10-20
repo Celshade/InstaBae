@@ -1,12 +1,7 @@
-"""Project: Insta-Bae
-
-Automatically log into instagram and like your girlfriend's pictures,
-if they haven't already been liked.
-"""
+"""Auto log into instagram and like your woman's (or man's) pictures."""
 from time import sleep
 
 from selenium import webdriver
-from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
@@ -18,6 +13,7 @@ TARGET = input("Enter target's username: ")
 # Designate firefox as browser and open window
 GECKO = "c:/users/cel/projects/extra/geckodriver.exe"
 driver = webdriver.Firefox(executable_path=GECKO)
+# TODO add additional drivers for IE and Chrome
 
 # ### SEARCH TEST ### #
 # search test
@@ -35,7 +31,7 @@ driver = webdriver.Firefox(executable_path=GECKO)
 #     driver.quit()
 # ### END SEARCH TEST ### #
 
-# Log into insta, close prompt, and find bae
+# Log into insta and find bae
 GRAM = "https://www.instagram.com/accounts/login/?source=auth_switcher"
 driver.get(GRAM)
 sleep(3)
@@ -46,20 +42,18 @@ username.send_keys(USER)
 password.send_keys(PASSWORD)
 password.submit()
 sleep(3)
+# TODO Raise an exception if user/password is incorrect
 
 BAE = f"https://www.instagram.com/{TARGET}/"
 driver.get(BAE)
 sleep(2)
+# TODO Raise an exception if target user is not found
 
 # TODO
 # Find the total amount of pictures
 # Find the total amount of pictures liked
 # Like the link of un-liked pictures
 # Like each un-liked pictures
-# Add 'try' statement to close notifications prompt
-# Raise an exception if user/password is incorrect
-# Raise an exception if target user is not found
-# TODO
 
 # Logging out and closing the browser
 ME = f"https://www.instagram.com/{USER}/"
