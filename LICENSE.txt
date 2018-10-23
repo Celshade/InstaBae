@@ -1,1 +1,1 @@
-LICENSE
+Copyright (c) [2018] Danny Collins aka Celshade

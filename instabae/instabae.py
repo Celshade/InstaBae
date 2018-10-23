@@ -1,4 +1,4 @@
-"""Auto log into instagram and like your woman's (or man's) pictures."""
+"""Auto like your [wo]man's pictures on instagram."""
 from time import sleep
 
 from selenium import webdriver
@@ -8,10 +8,10 @@ from selenium.webdriver.support.ui import WebDriverWait
 # Set user/password/target values prior to opening browser
 USER = input("Enter username: ")
 PASSWORD = input("Enter password: ")
-TARGET = input("Enter target's username: ")
+BAE = input("Enter bae's username: ")
 
 # Designate firefox as browser and open window
-GECKO = "./drivers/geckodriver.exe"
+GECKO = "../drivers/geckodriver.exe"
 driver = webdriver.Firefox(executable_path=GECKO)
 # TODO add additional drivers for IE and Chrome
 
@@ -28,8 +28,8 @@ password.submit()
 sleep(3)
 # TODO Raise an exception if user/password is incorrect
 
-BAE = f"https://www.instagram.com/{TARGET}/"
-driver.get(BAE)
+TARGET = f"https://www.instagram.com/{BAE}/"
+driver.get(TARGET)
 sleep(2)
 # TODO Raise an exception if target user is not found
 
