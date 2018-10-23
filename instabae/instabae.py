@@ -11,25 +11,9 @@ PASSWORD = input("Enter password: ")
 TARGET = input("Enter target's username: ")
 
 # Designate firefox as browser and open window
-GECKO = "c:/users/cel/projects/extra/geckodriver.exe"
+GECKO = "./drivers/geckodriver.exe"
 driver = webdriver.Firefox(executable_path=GECKO)
 # TODO add additional drivers for IE and Chrome
-
-# ### SEARCH TEST ### #
-# search test
-# driver.get("https://www.duckduckgo.com/")
-# sleep(4)
-# search = driver.find_element_by_id("search_form_input_homepage")
-# search.send_keys("celshade, code")
-# search.submit()
-
-# # wait for paige refresh
-# try:
-#     WebDriverWait(driver, 10).until(EC.title_contains("celshade, code"))
-#     print(driver.title)
-# finally:
-#     driver.quit()
-# ### END SEARCH TEST ### #
 
 # Log into insta and find bae
 GRAM = "https://www.instagram.com/accounts/login/?source=auth_switcher"
