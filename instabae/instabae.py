@@ -2,8 +2,6 @@
 from time import sleep
 
 from selenium import webdriver
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.ui import WebDriverWait
 
 # Set user/password/target values prior to opening browser
 USER = input("Enter username: ")
