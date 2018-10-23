@@ -1,5 +1,9 @@
 # InstaBae
 _Automatically like your [wo]man's pictures on Instagram._
+
+
+**_Use this software at your own risk. I am not responsible for banned_**
+**_accounts or any other reprecussion encountered from using this software._**
 ***
 
 Many of us don't have a lot of free time, these days. Many of us also have
