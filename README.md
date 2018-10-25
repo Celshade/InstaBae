@@ -6,7 +6,8 @@ _Automatically like your [wo]man's pictures on Instagram._
 
 
 **Disclaimer**: Please note that this is a personal research project. I am by
-no means responsible for any usage of this tool, nor responsible for any bans resulting from extensive use. **Use at your own risk.**
+no means responsible for any usage of this tool, nor responsible for any bans
+due to extensive use. **Use at your own risk.**
 ***
 
 **Requirements:**

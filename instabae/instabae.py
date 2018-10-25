@@ -24,17 +24,17 @@ username.send_keys(USER)
 password.send_keys(PASSWORD)
 password.submit()
 sleep(3)
-# TODO Raise an exception if user/password is incorrect
+# TODO Handle incorrect user/password
 
 TARGET = f"https://www.instagram.com/{BAE}/"
 driver.get(TARGET)
 sleep(2)
-# TODO Raise an exception if target user is not found
+# TODO Handle TARGET not being found (incorrect username)
 
 # TODO
 # Find the total amount of pictures
 # Find the total amount of pictures liked
-# Like the link of un-liked pictures
+# Like un-liked pictures
 # Like each un-liked pictures
 
 # Logging out and closing the browser
