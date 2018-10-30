@@ -8,13 +8,17 @@ USER = input("Enter username: ")
 PASSWORD = input("Enter password: ")
 BAE = input("Enter bae's username: ")
 
-# Designate firefox as browser and open window
-GECKO = "../drivers/geckodriver.exe"
-driver = webdriver.Firefox(executable_path=GECKO)
-# TODO add additional drivers for IE and Chrome
-
-# Log into insta and find bae
+# Useful constants.
+GECKO = ".//drivers/geckodriver.exe"
 GRAM = "https://www.instagram.com/accounts/login/?source=auth_switcher"
+TARGET = f"https://www.instagram.com/{BAE}/"
+ME = f"https://www.instagram.com/{USER}/"
+
+# TODO Add additional driver support for IE and Chrome.
+# TODO def driver(browser: str="FireFox") # select necessary driver
+driver = webdriver.Firefox(executable_path=GECKO)
+
+# ### Open browser, log in, navigate to target. ### #
 driver.get(GRAM)
 sleep(3)
 
@@ -26,9 +30,8 @@ password.submit()
 sleep(3)
 # TODO Handle incorrect user/password
 
-TARGET = f"https://www.instagram.com/{BAE}/"
 driver.get(TARGET)
-sleep(2)
+sleep(3)
 # TODO Handle TARGET not being found (incorrect username)
 
 # TODO
@@ -37,8 +40,7 @@ sleep(2)
 # Like un-liked pictures
 # Like each un-liked pictures
 
-# Logging out and closing the browser
-ME = f"https://www.instagram.com/{USER}/"
+# ### Logging out and closing the browser ### #
 driver.get(ME)
 sleep(3)
 
