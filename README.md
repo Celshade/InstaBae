@@ -28,7 +28,9 @@ for **_InstaBae_** was born.
 ***
 
 ### Instructions
-TBA
+Once the requirements are met, and the package is downloaded, simply run
+`./instabae/instabae.py`. Before the magic happens, you will need to input your credentials, the
+username of your target bae, and choose your mode. That's it! InstaBae will take care of the rest, whilst you get back to your coffee.
 ***
 
 ### FAQ
@@ -42,8 +44,7 @@ _If you're worried about perceptions, this may not be the solution for you._
 
 For the most recent developments, please see branch [DEV](https://github.com/Celshade/InstaBae/tree/dev).
 
-Additional information can be found in the Wiki below. \
-_Wiki -> https://github.com/Celshade/InstaBae/wiki/_ \
+Care to drop some feedback or found a bug? See the link, below. \
 _Comments & bugs -> https://www.github.com/Celshade/InstaBae/issues_
 
 Peace
