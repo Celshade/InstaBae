@@ -7,6 +7,7 @@ from selenium import webdriver
 USER = input("Enter username: ")
 PASSWORD = input("Enter password: ")
 BAE = input("Enter bae's username: ")
+# TODO Add 'modes' ('S' for Spectator mode | 'N' for Ninja mode)
 
 # Useful constants.
 GECKO = ".//drivers/geckodriver.exe"
@@ -22,8 +23,8 @@ driver = webdriver.Firefox(executable_path=GECKO)
 driver.get(GRAM)
 sleep(3)
 
-username = driver.find_element_by_name('username')
-password = driver.find_element_by_name('password')
+username = driver.find_element_by_name("username")
+password = driver.find_element_by_name("password")
 username.send_keys(USER)
 password.send_keys(PASSWORD)
 password.submit()
@@ -34,20 +35,25 @@ driver.get(TARGET)
 sleep(3)
 # TODO Handle TARGET not being found (incorrect username)
 
-# TODO
-# Find the total amount of pictures
-# Find the total amount of pictures liked
-# Like un-liked pictures
-# Like each un-liked pictures
+try:
+    # Find the total amount of pictures
+    total = driver.find_element_by_class_name("g47SY ")
+    total = total.get_attribute("textContent")
+    # TODO Find the total amount of pictures liked
+    # TODO Like un-liked pictures
+    # TODO Like each un-liked pictures
 
-# ### Logging out and closing the browser ### #
-driver.get(ME)
-sleep(3)
+except Exception:
+    print("Something went wrong")
+finally:
+    # ### Logging out and closing the browser ### #
+    driver.get(ME)
+    sleep(3)
 
-settings = "/html/body/span/section/main/div/header/section/div[1]/div/button"
-driver.find_element_by_xpath(settings).click()
+    settings = "/html/body/span/section/main/div/header/section/div[1]/div/button"
+    driver.find_element_by_xpath(settings).click()
 
-loggout = "/html/body/div[3]/div/div/div/div/button[6]"
-driver.find_element_by_xpath(loggout).click()
-sleep(3)
-driver.quit()
+    loggout = "/html/body/div[3]/div/div/div/div/button[6]"
+    driver.find_element_by_xpath(loggout).click()
+    sleep(3)
+    driver.quit()
