@@ -17,19 +17,25 @@ DRIVER = webdriver.Firefox(executable_path=GECKO)
 # TODO Add 'modes' ('S' for Spectator mode | 'N' for Ninja mode)
 
 
-def scroll(speed: float=1.00) -> None:
-    """Scroll to the bottom of a page.
+def scroll_and_grab(speed: float=2.00) -> set:
+    """Scroll to the bottom of a page and return a set of all picture hrefs.
 
     Args:
         speed: Seconds to sleep after each scroll (default=1.00).
     """
+    links = set()  # Automatically filter duplicates
+
     while True:
-        # Get current page height
+        # Add all currently 'visible' posts to the list
+        path = "//div[@class='Nnq7C weEfm']//descendant::a"
+        for x in DRIVER.find_elements_by_xpath(path):
+            links.add(x.get_attribute('href'))
+
+        # Get current page height and scroll to the bottom of the page
         height = DRIVER.execute_script("return document.body.scrollHeight")
-        # Scroll to the bottom of the page
-        scroll = "window.scrollTo(0, document.body.scrollHeight);"
-        DRIVER.execute_script(scroll)
-        sleep(speed)  # For refreshing
+        j_scroll = "window.scrollTo(0, document.body.scrollHeight);"
+        DRIVER.execute_script(j_scroll)
+        sleep(speed)  # Allow refreshing
 
         # Compare height values
         current = DRIVER.execute_script("return document.body.scrollHeight")
@@ -38,6 +44,7 @@ def scroll(speed: float=1.00) -> None:
         else:
             height = current
     sleep(1)
+    return links
 
 
 def loggout(speed: float=3.00) -> None:
@@ -58,6 +65,7 @@ def loggout(speed: float=3.00) -> None:
     sleep(3)
     DRIVER.quit()
 
+
 # ### Open browser, log in, navigate to target. ### #
 DRIVER.get(GRAM)
 sleep(3)
@@ -77,15 +85,17 @@ sleep(3)
 # Find the total number of pictures
 _ = DRIVER.find_element_by_class_name("g47SY ")
 total = _.get_attribute("textContent")
+print(f"\nTotal posts: {total}")
 
 # TODO Find the total number of 'liked' pictures
-# Scroll to bottom of page
-scroll()
 try:
-    # TODO Like un-liked pictures
-    # TODO Like each un-liked pictures
-    pass
+    # Scroll to bottom of page and build a list of picture hrefs
+    pics = scroll_and_grab()
+    print(f"Pictures found: {len(pics)}")
 except Exception:
     print("Something went wrong")
 finally:
     loggout()
+
+# TODO Like un-liked pictures
+# TODO Like each un-liked pictures
