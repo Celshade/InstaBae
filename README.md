@@ -5,16 +5,6 @@
 
 _Automatically like your [wo]man's pictures on Instagram._
 
-**Disclaimer**: Please note that this is a personal research project. I am by
-no means responsible for any usage of this tool, nor responsible for any bans
-due to extensive use. **Use at your own risk.**
-
-**Requirements:**
-
-1. _**Python [3.6+]**_: Can be downloaded ->[here](https://www.python.org/)<-
-1. _**Selenium**_: Installable via pip or downloaded ->[here](https://www.seleniumhq.org/download/)<-
-***
-
 Many of us have very little free time, these days. Many of us also have
 significant others who really LOVE Instagram. A true _bae_ is duty-bound to
 like all of his/her partner's pictures; however, remembering to do so,
@@ -22,18 +12,34 @@ let alone finding the time, can become a real mission. By default, we already
 support our partners and their goals - however big or small. It is only
 logical that we show support to their insta-endevours, as well!
 
-After many inquiries of "Why haven't you liked my picture, yet?" paired with
-an icy glare beneath furrowed brows, a solution had to be found. Thus, the idea
+After many an inquiry of "Why haven't you liked my picture, yet?" paired with
+an icy glare 'neath furrowed brows, a solution had to be found. Thus, the idea
 for **_InstaBae_** was born.
+
+**Disclaimer**: Please note that this is a personal research project. I am by
+no means responsible for any usage of this tool, nor responsible for any bans
+due to extensive use. **Use at your own risk.**
 ***
 
-### Instructions
-Once the requirements are met, and the package is downloaded, simply run
-`./instabae/instabae.py`. Before the magic happens, you will need to input your credentials, the
-username of your target bae, and choose your mode. That's it! InstaBae will take care of the rest, whilst you get back to your coffee.
+## Requirements
+1. _**Python [3.6+]**_: Can be downloaded ->[here](https://www.python.org/)<-
+1. _**Selenium**_: Installable via pip or downloaded ->[here](https://www.seleniumhq.org/download/)<-
 ***
 
-### FAQ
+## Instructions
+Once the requirements are met, simply download the package and run
+`./instabae/instabae.py`. Before the magic happens, you will be met with a
+short series of prompts - where you'll enter your username, password, the
+username of your target bae, and select your mode.
+
+### Modes
+* **Spectator** - allows you to watch what is happening, on screen.
+* **Ninja** - will simply run everything in the shadows (background).
+
+That's it! InstaBae will take care of the rest, whilst you get back to your coffee.
+***
+
+## FAQ
 **(Q)**: My [wo]man posts some crazy things, at times. Is this app for me? \
 **(A)**: _Know Thy Bae. Blind support, of anything, carries inherent risks._
 _If you're worried about perceptions, this may not be the solution for you._
