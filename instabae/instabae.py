@@ -37,7 +37,13 @@ class BaeFinder(object):
 
     def __repr__(self) -> str:
         """Return basic information carried by BaeFinder."""
-        return f"\n\nWelcome {self.user} to InstaBae!\nLocating {self.bae}..."
+        return f"""
+        \nSession info:
+        User: {self.user}
+        Bae: {self.bae}
+        Driver: {type(self.DRIVER)}
+        Mode: TBA
+        """
 
     def log_in(self, speed: float=3.00) -> None:
         """Open browser, log into Instagram, and navigate to target.
@@ -62,6 +68,7 @@ class BaeFinder(object):
         # TODO Handle incorrect user/password
 
         # Navigate to target page
+        print(f"\nLocating {self.bae}...")
         self.DRIVER.get(TARGET)
         sleep(3)
         # TODO Handle TARGET not being found (incorrect username)
@@ -118,12 +125,13 @@ class BaeFinder(object):
         self.DRIVER.quit()
         print("Session closed successfully!")
 
+    # Placeholder method. Will be re-named and re-located upon completion.
     def test(self) -> None:
         """Test"""
         # Find the total number of pictures
         POSTS = self.DRIVER.find_element_by_class_name("g47SY ")
         TOTAL = POSTS.get_attribute("textContent")
-        print(f"\nTotal posts: {TOTAL}")
+        print(f"Total posts: {TOTAL}")
 
         # TODO Find the total number of 'liked' pictures
         try:
@@ -146,9 +154,14 @@ def config() -> tuple:
     user information (str) and driver (webdriver()) needed to run the program.
 
     Returns:
-        A list containing your driver, target username, and username.
+        A tuple containing bae's username, your username, password, and driver.
     """
-    # Select a driver
+    # Title display
+    message = "Welcome to InstaBae!"
+    wrap = '=' * len(message)
+    print(f"\n{wrap}\n{message}\n{wrap}")
+
+    # Configuration prompts
     bae = input("\nEnter the username of your bae: ")
     user = input("Enter your username: ")
     password = input("Enter your password: ")
@@ -173,8 +186,8 @@ def config() -> tuple:
 def main() -> None:
     """Summon BaeFinder."""
     session = BaeFinder(config())
-    session.log_in()
     print(session)
+    session.log_in()
     session.test()
 
 
