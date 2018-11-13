@@ -15,9 +15,11 @@ class BaeFinder(object):
     """Search Instagram for Bae and like their un-liked pictures.
 
     Attributes:
+        config: A tuple containing the configuration for BaeFinder().
+        bae: The username of the target bae.
+        user: The username of the user.
+        __password: The password of the user.
         DRIVER: The specified driver to utilize.
-        BAE: The username of the target bae.
-        USER: The username of the user.
     Public Methods:
         log_in(): Log into Instagram.
         scroll_and_grab(): Scroll through the page and gather posts.
@@ -25,15 +27,17 @@ class BaeFinder(object):
         test(): Temporary handler of BaeFinder() methods.
     """
 
-    def __init__(self, driver: webdriver, bae: str, user: str) -> None:
-        self.DRIVER = driver
-        self.BAE = bae
-        self.USER = user
+    def __init__(self, config: tuple) -> None:
+        self.bae = config[0]
+        self.user = config[1]
+        self.__password = config[2]
+        self.DRIVER = config[3]
+        self.MODE = None  # Will be added later.
         # TODO Add 'modes' ('S' for Spectator mode | 'N' for Ninja mode)
 
     def __repr__(self) -> str:
         """Return basic information carried by BaeFinder."""
-        return f"\n\nWelcome {self.USER} to InstaBae!\nLocating {self.BAE}..."
+        return f"\n\nWelcome {self.user} to InstaBae!\nLocating {self.bae}..."
 
     def log_in(self, speed: float=3.00) -> None:
         """Open browser, log into Instagram, and navigate to target.
@@ -41,10 +45,8 @@ class BaeFinder(object):
         Args:
             speed: Seconds to sleep (refresh) between pages.
         """
-        # TODO Rearrange to allow password input before browser window opens
-        _PASSWORD = input("Please enter your password: ")
         GRAM = "https://www.instagram.com/accounts/login/?source=auth_switcher"
-        TARGET = f"https://www.instagram.com/{self.BAE}/"
+        TARGET = f"https://www.instagram.com/{self.bae}/"
 
         # Open browser -> Instagram
         self.DRIVER.get(GRAM)
@@ -53,8 +55,8 @@ class BaeFinder(object):
         # Log in
         username = self.DRIVER.find_element_by_name("username")
         password = self.DRIVER.find_element_by_name("password")
-        username.send_keys(self.USER)
-        password.send_keys(_PASSWORD)
+        username.send_keys(self.user)
+        password.send_keys(self.__password)
         password.submit()
         sleep(3)
         # TODO Handle incorrect user/password
@@ -101,7 +103,7 @@ class BaeFinder(object):
             speed: Seconds to sleep (refresh) between pages (default=3.00).
         """
         print("Logging out...")
-        HOME = f"https://www.instagram.com/{self.USER}/"
+        HOME = f"https://www.instagram.com/{self.user}/"
         SETTINGS = "//button[@class='_0mzm- dCJp8']"
         LOG_OUT = "//button[text()='Log Out']"
 
@@ -137,7 +139,7 @@ class BaeFinder(object):
         # TODO Like each un-liked pictures
 
 
-def config() -> list:
+def config() -> tuple:
     """Prompt for user input and return the configuration.
 
     To be used in conjunction with BaeFinder(), by providing the necessary
@@ -147,9 +149,11 @@ def config() -> list:
         A list containing your driver, target username, and username.
     """
     # Select a driver
-    user = input("\nEnter your username: ")
-    bae = input("Enter the username of your target: ")
+    bae = input("\nEnter the username of your bae: ")
+    user = input("Enter your username: ")
+    password = input("Enter your password: ")
     driver = None
+    mode = None  # TODO To be added later.
 
     while driver is None:
         _ = input("Enter [F] for FireFox or [C] for Chrome: ")
@@ -163,13 +167,12 @@ def config() -> list:
             break
         else:
             print("\nNot a compatible browser.\n")
-    return [driver, bae, user]
+    return (bae, user, password, driver)
 
 
 def main() -> None:
     """Summon BaeFinder."""
-    driver, bae, user = config()
-    session = BaeFinder(driver, bae, user)
+    session = BaeFinder(config())
     session.log_in()
     print(session)
     session.test()
