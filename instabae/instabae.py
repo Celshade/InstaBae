@@ -28,11 +28,7 @@ class BaeFinder(object):
     """
 
     def __init__(self, config: tuple) -> None:
-        self.bae = config[0]
-        self.user = config[1]
-        self.__password = config[2]
-        self.DRIVER = config[3]
-        self.MODE = None  # Will be added later.
+        self.bae, self.user, self.__password, self.DRIVER, self.MODE = config
         # TODO Add 'modes' ('S' for Spectator mode | 'N' for Ninja mode)
 
     def __repr__(self) -> str:
@@ -41,8 +37,8 @@ class BaeFinder(object):
         \nSession info:
         User: {self.user}
         Bae: {self.bae}
-        Driver: {type(self.DRIVER)}
-        Mode: TBA
+        Browser: {'FireFox' if 'firefox' in str(self.DRIVER) else 'Chrome'}
+        Mode: Spectator
         """
 
     def log_in(self, speed: float=3.00) -> None:
@@ -180,7 +176,7 @@ def config() -> tuple:
             break
         else:
             print("\nNot a compatible browser.\n")
-    return (bae, user, password, driver)
+    return (bae, user, password, driver, mode)
 
 
 def main() -> None:
