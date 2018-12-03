@@ -8,53 +8,62 @@ Functions:
 """
 from time import sleep
 
-from selenium import webdriver
+from selenium import webdriver as WEB
+# from selenium.webdriver import common as COM
 
 
 class BaeFinder(object):
     """Search Instagram for Bae and like their un-liked pictures.
 
+    Parameters defined in the config (tuple) parameter are unpacked into each
+    of BeaFinder's attributes.
+
     Attributes:
-        config: A tuple containing the configuration for BaeFinder().
-        bae: The username of the target bae.
-        user: The username of the user.
-        __password: The password of the user.
-        DRIVER: The specified driver to utilize.
+        bae (str): The username of the target bae.
+        user (str): The username of the user.
+        __password (str): The password of the user.
+        MODE (str): The mode in which to run BaeFinder() (default='N').
+        DRIVER (webdriver): The driver to utilize.
     Public Methods:
         log_in(): Log into Instagram.
-        scroll_and_grab(): Scroll through the page and gather posts.
+        scroll_and_grab(): Scroll through the page and gather post information.
         log_out(): Log out of Instagram and close the browser session.
-        test(): Temporary handler of BaeFinder() methods.
     """
 
     def __init__(self, config: tuple) -> None:
-        self.bae, self.user, self.__password, self.DRIVER, self.MODE = config
+        self.bae, self.user, self.__password, self.MODE, self.DRIVER = config
         # TODO Add 'modes' ('S' for Spectator mode | 'N' for Ninja mode)
 
     def __repr__(self) -> str:
         """Return basic information carried by BaeFinder."""
         return f"""
-        \nSession info:
+        ::Session info::
         User: {self.user}
         Bae: {self.bae}
-        Browser: {'FireFox' if 'firefox' in str(self.DRIVER) else 'Chrome'}
-        Mode: Spectator
+        Mode: Spectator (current default)
+        Browser: FireFox (Geckodriver)
         """
 
-    def log_in(self, speed: float=3.00) -> None:
+    def log_in(self, refresh: float=3.00) -> None:
         """Open browser, log into Instagram, and navigate to target.
 
         Args:
-            speed: Seconds to sleep (refresh) between pages.
+            refresh: Seconds to sleep between pages (default=3.00).
         """
         GRAM = "https://www.instagram.com/accounts/login/?source=auth_switcher"
         TARGET = f"https://www.instagram.com/{self.bae}/"
+        # Welcome message
+        message = f"Welcome to InstaBae {self.user}!"
+        wrap = '=' * len(message)
+        title = f"\n{wrap}\n{message}\n{wrap}"
 
         # Open browser -> Instagram
+        print(title)
         self.DRIVER.get(GRAM)
-        sleep(3)
+        sleep(refresh)
 
         # Log in
+        print("Logging in...")
         username = self.DRIVER.find_element_by_name("username")
         password = self.DRIVER.find_element_by_name("password")
         username.send_keys(self.user)
@@ -64,50 +73,44 @@ class BaeFinder(object):
         # TODO Handle incorrect user/password
 
         # Navigate to target page
-        print(f"\nLocating {self.bae}...")
+        print(f"Locating {self.bae}...")
         self.DRIVER.get(TARGET)
-        sleep(3)
+        sleep(refresh)
         # TODO Handle TARGET not being found (incorrect username)
+        print("Profile located.")
 
-    def scroll_and_grab(self, speed: float=2.00) -> set:
-        """Scroll to page bottom and return a set of all picture hrefs.
+    def scroll_and_grab(self) -> None:
+        """Scroll to page bottom and return a set of all picture hrefs."""
+        POSTS = self.DRIVER.find_element_by_class_name("g47SY ")
+        TOTAL = int(POSTS.get_attribute("textContent"))
+        links = []
 
-        Args:
-            speed: Seconds to sleep after each scroll (default=2.00).
-        """
-        links = set()  # Automatically filter duplicates
-
+        print(f"Total posts: {TOTAL}\n")
+        print("Gathering post information...")
         while True:
             # Add all currently 'visible' posts to the list
             path = "//div[@class='Nnq7C weEfm']//descendant::a"
-            for x in self.DRIVER.find_elements_by_xpath(path):
-                links.add(x.get_attribute('href'))
 
-            # Get current page height and scroll to the bottom of the page
-            js_height = "return document.body.scrollHeight"
-            js_scroll = "window.scrollTo(0, document.body.scrollHeight);"
-            height = self.DRIVER.execute_script(js_height)
-            self.DRIVER.execute_script(js_scroll)
-            sleep(speed)  # Allow refreshing
+            for post in self.DRIVER.find_elements_by_xpath(path):
+                href = post.get_attribute("href")
 
-            # Compare height values
-            current = self.DRIVER.execute_script(js_height)
-            if current == height:
+                if href not in links:
+                    # Scroll to element
+                    self.DRIVER.execute_script("arguments[0].scrollIntoView();", post)
+                    links.append(href)
+            if len(links) == TOTAL:
                 break
-            else:
-                height = current
-        sleep(1)
-        return links
+        print(f"Gathered posts: {len(links)}")
 
-    def log_out(self, speed: float=3.00) -> None:
+    def log_out(self, refresh: float=3.00) -> None:
         """Log out and close the browser.
 
         Args:
-            speed: Seconds to sleep (refresh) between pages (default=3.00).
+            refresh: Seconds to sleep between pages (default=3.00).
         """
         print("Logging out...")
         HOME = f"https://www.instagram.com/{self.user}/"
-        SETTINGS = "//button[@class='_0mzm- dCJp8']"
+        SETTINGS = "//button[@class='dCJp8 afkep _0mzm-']"
         LOG_OUT = "//button[text()='Log Out']"
 
         # Nav to USER's profile
@@ -117,75 +120,45 @@ class BaeFinder(object):
         self.DRIVER.find_element_by_xpath(SETTINGS).click()
         # Loggout and close browser.
         self.DRIVER.find_element_by_xpath(LOG_OUT).click()
-        sleep(3)
+        sleep(refresh)
         self.DRIVER.quit()
         print("Session closed successfully!")
-
-    # Placeholder method. Will be re-named and re-located upon completion.
-    def test(self) -> None:
-        """Test"""
-        # Find the total number of pictures
-        POSTS = self.DRIVER.find_element_by_class_name("g47SY ")
-        TOTAL = POSTS.get_attribute("textContent")
-        print(f"Total posts: {TOTAL}")
-
-        # TODO Find the total number of 'liked' pictures
-        try:
-            # Scroll to bottom of page and build a list of picture hrefs
-            pics = self.scroll_and_grab()
-            print(f"Pictures found: {len(pics)}")
-        except Exception:
-            print("Something went wrong")
-        finally:
-            self.log_out()
-
-        # TODO Like un-liked pictures
-        # TODO Like each un-liked pictures
 
 
 def config() -> tuple:
     """Prompt for user input and return the configuration.
 
     To be used in conjunction with BaeFinder(), by providing the necessary
-    user information (str) and driver (webdriver()) needed to run the program.
+    target/user information, run-mode, and driver.
 
     Returns:
-        A tuple containing bae's username, your username, password, and driver.
+        A tuple containing the configuration for Baefinder().
     """
-    # Title display
-    message = "Welcome to InstaBae!"
-    wrap = '=' * len(message)
-    print(f"\n{wrap}\n{message}\n{wrap}")
-
     # Configuration prompts
     bae = input("\nEnter the username of your bae: ")
     user = input("Enter your username: ")
     password = input("Enter your password: ")
-    driver = None
     mode = None  # TODO To be added later.
+    driver = WEB.Firefox(executable_path="../drivers/geckodriver.exe")
 
-    while driver is None:
-        _ = input("Enter [F] for FireFox or [C] for Chrome: ")
-        if _.lower() == "f":
-            GECKO = "../drivers/geckodriver.exe"
-            driver = webdriver.Firefox(executable_path=GECKO)
-            break
-        elif _.lower() == "c":
-            CHROME = "../drivers/chromedriver.exe"
-            driver = webdriver.Chrome(exectable_path=CHROME)
-            break
-        else:
-            print("\nNot a compatible browser.\n")
-    return (bae, user, password, driver, mode)
+    return (bae, user, password, mode, driver)
 
 
 def main() -> None:
     """Summon BaeFinder."""
     session = BaeFinder(config())
+
     print(session)
     session.log_in()
-    session.test()
-
+    # TODO Find the total number of 'liked' pictures
+    try:
+        session.scroll_and_grab()
+    except Exception:
+        print("Something went wrong")
+    finally:
+        session.log_out()
+    # TODO Like un-liked pictures
+    # TODO Like each un-liked pictures
 
 if __name__ == "__main__":
     main()
