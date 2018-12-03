@@ -1,5 +1,2 @@
 Link to the most recent FireFox driver [Geckodriver].
 https://github.com/mozilla/geckodriver/releases
-
-Link to the most recent Chrome driver [ChromeDriver].
-https://sites.google.com/a/chromium.org/chromedriver/downloads

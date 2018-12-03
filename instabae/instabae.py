@@ -96,7 +96,8 @@ class BaeFinder(object):
 
                 if href not in links:
                     # Scroll to element
-                    self.DRIVER.execute_script("arguments[0].scrollIntoView();", post)
+                    JS_SCROLL_TO = "arguments[0].scrollIntoView();"
+                    self.DRIVER.execute_script(JS_SCROLL_TO, post)
                     links.append(href)
             if len(links) == TOTAL:
                 break
