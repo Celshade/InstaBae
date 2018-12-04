@@ -32,7 +32,7 @@ Once the requirements are met, simply download the package and run
 short series of prompts - where you'll enter your username, password, the
 username of your target bae, and select your mode.
 
-### Modes
+### Modes (*Not yet implemented! Default will run in Spectator mode)
 * **Spectator** - allows you to watch what is happening, on screen.
 * **Ninja** - will simply run everything in the shadows (background).
 
