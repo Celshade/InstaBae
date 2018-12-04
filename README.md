@@ -23,7 +23,7 @@ due to extensive use. **Use at your own risk.**
 
 ## Requirements
 1. _**Python [3.6+]**_: Can be downloaded ->[here](https://www.python.org/)<-
-1. _**Selenium**_: Installable via pip or downloaded ->[here](https://www.seleniumhq.org/download/)<-
+1. _**Selenium**_: Installable from the command line, via **pip**, with `pip install selenium` or downloaded ->[here](https://www.seleniumhq.org/download/)<-
 ***
 
 ## Instructions
