@@ -9,7 +9,7 @@ Functions:
 from time import sleep
 
 from selenium import webdriver as WEB
-# from selenium.webdriver import common as COM
+from selenium.webdriver import common as COM
 
 
 class BaeFinder(object):
@@ -82,12 +82,15 @@ class BaeFinder(object):
     def scroll_and_grab(self) -> None:
         """Scroll to page bottom and return a set of all picture hrefs."""
         POSTS = self.DRIVER.find_element_by_class_name("g47SY ")
-        TOTAL = int(POSTS.get_attribute("textContent"))
+        TOTAL = int(POSTS.get_attribute("textContent").replace(",", ""))
         links = []
 
         print(f"Total posts: {TOTAL}\n")
         print("Gathering post information...")
         while True:
+            # TODO Like un-liked pictures
+            # ACTIONS = WEB.ActionChains(self.DRIVER)
+            # ESC = COM.keys.Keys.ESCAPE
             # Add all currently 'visible' posts to the list
             path = "//div[@class='Nnq7C weEfm']//descendant::a"
 
@@ -96,9 +99,11 @@ class BaeFinder(object):
 
                 if href not in links:
                     # Scroll to element
+                    # TODO click and close elements
                     JS_SCROLL_TO = "arguments[0].scrollIntoView();"
                     self.DRIVER.execute_script(JS_SCROLL_TO, post)
                     links.append(href)
+                    # ACTIONS.click(post).send_keys(ESC).perform()
             if len(links) == TOTAL:
                 break
         print(f"Gathered posts: {len(links)}")
@@ -151,15 +156,13 @@ def main() -> None:
 
     print(session)
     session.log_in()
-    # TODO Find the total number of 'liked' pictures
     try:
         session.scroll_and_grab()
     except Exception:
         print("Something went wrong")
     finally:
         session.log_out()
-    # TODO Like un-liked pictures
-    # TODO Like each un-liked pictures
+
 
 if __name__ == "__main__":
     main()
