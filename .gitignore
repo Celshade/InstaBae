@@ -1,4 +1,4 @@
 __pycache__/
 .vscode
 geckodriver.log
-chromedriver.exe
+./drivers/chromedriver.exe
