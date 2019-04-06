@@ -13,7 +13,7 @@ URL = 'https://github.com/Celshade/InstaBae'
 EMAIL = 'ggcelshade@gmail.com'
 AUTHOR = "Danny 'Celshade' Collins"
 REQUIRES_PYTHON = '>=3.6'
-VERSION = '0.0.4'
+VERSION = '0.0.5'
 REQUIRES = ['selenium']
 # TODO Include drivers in build.
 
