@@ -28,7 +28,8 @@ class BaeFinder(object):
     Public Methods:
         log_in(): Log into Instagram.
         get_total(): Gather the total number of posts.
-        scroll_and_grab(): Scroll through the page and gather post information.
+        scroll_and_grab(): Scroll through the feed and gather post information.
+        like_posts(): Like the gathered posts.
         log_out(): Log out of Instagram and close the browser session.
     """
 
