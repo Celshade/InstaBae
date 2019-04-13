@@ -12,19 +12,18 @@ from selenium import webdriver as WEB
 
 
 class BaeFinder(object):
-    """Search Instagram for Bae and like their un-liked pictures.
+    """Search Instagram for Bae and like their posts.
 
-    Parameters defined in the config parameter are unpacked into each
+    Objects defined in the 'settings' parameter are unpacked into each
     of BeaFinder's attributes.
 
     Attributes:
+        DRIVER (webdriver): The driver to utilize.
+        MODE (str): The mode in which to run.
         bae (str): The username of the target.
+        depth (int): The amount of posts to like.
         user (str): The username of the user.
         passw (str): The password of the user.
-        MODE (str): The mode in which to run.
-        DRIVER (webdriver): The driver to utilize.
-        depth (int): The amount of posts to like.
-        total (int): The total amount of available posts.
     Public Methods:
         log_in(): Log into Instagram.
         get_total(): Gather the total number of posts.
@@ -164,16 +163,16 @@ def config() -> tuple:
     print(title)
 
     # Configuration prompts
-    bae = input("\nEnter the username of your bae: ")
-    depth = input("Enter the number of posts to like ('A' for ALL -> SLOW!): ")
-    user = input("Enter your username: ")
-    password = input("Enter your password: ")
-    # TODO Add 'N' mode ('S' for Spectator mode | 'N' for Ninja mode)
-    mode = 'S'
-    driver = WEB.Firefox(executable_path="../drivers/geckodriver.exe")
+    MODE_TEXT = "('S' for Spectator mode | 'N' for Ninja mode):"
+    DRIVER = WEB.Firefox(executable_path="../drivers/geckodriver.exe")
+    MODE = input("\nEnter your desired MODE {MODE_TEXT}")
+    BAE = input("\nEnter the username of your bae: ")
+    DEPTH = input("Enter the number of posts to like ('A' for ALL -> SLOW!): ")
+    USER = input("Enter your username: ")
+    PASSWORD = input("Enter your password: ")
 
     depth = 'a' if depth.lower() == 'a' else int(depth)
-    return (depth, bae, user, password, mode, driver)
+    return (DRIVER, MODE, BAE, DEPTH, USER, PASSWORD)
 
 
 def main() -> None:
