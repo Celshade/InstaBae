@@ -41,14 +41,14 @@ That's it! InstaBae will take care of the rest, whilst you get back to your coff
 
 ## FAQ
 **(Q)**: Bae posts some crazy things, at times. Is this app for me? \
-**(A)**: _Know Thy bae. Blind support, of anything, carries inherent risks._
+**(A)**: _Know thy bae. Blind support, of anything, carries inherent risks._
 _If you're worried about perceptions, this may not be the solution for you._
 
 **(Q)**: I don't have _bae_ status. Can I still use this app? \
 **(A)**: _Absolutely. InstaBae fully recognizes useage amongst friends, as well._
 ***
 
-Care to drop some feedback or found a bug? See the link, below. \
+Found a bug or care to drop some feedback? See the link below! \
 _Comments & bugs -> https://www.github.com/Celshade/InstaBae/issues_
 
 Peace
