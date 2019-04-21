@@ -3,7 +3,7 @@
 [![built with Python3](https://img.shields.io/badge/built%20with-Python3-green.svg)](https://www.python.org/)
 [![built with Selenium](https://img.shields.io/badge/built%20with-Selenium-orange.svg)](https://github.com/SeleniumHQ/selenium)
 
-_Automatically like Bae's posts on Instagram._
+_Automatically like bae's posts on Instagram._
 
 Many of us have very little free time, these days. Many of us also have
 significant others who really LOVE Instagram. A true _bae_ is duty-bound to
@@ -27,12 +27,12 @@ due to extensive use. **Use at your own risk.**
 ***
 
 ## Instructions
-Once the requirements are met, simply download the package and run
-`./instabae/instabae.py`. Before the magic happens, you will be met with a
-short series of prompts - where you'll enter your username, password, the
-username of your target bae, and select your mode.
+Once the requirements are met, simply download the package, navigate to the directory,
+and run `./instabae/instabae.py`. Before the magic happens, you will be met with a
+short series of prompts where you'll configure your session (run mode, the username
+of your target bae, how many posts you wish to 'like', and login credentials).
 
-### Modes (*Not yet implemented! Default will run in Spectator mode)
+### Modes (*Not fully implemented! Default will run in Spectator mode)
 * **Spectator** - allows you to watch what is happening, on screen.
 * **Ninja** - will simply run everything in the shadows (background).
 
@@ -41,14 +41,12 @@ That's it! InstaBae will take care of the rest, whilst you get back to your coff
 
 ## FAQ
 **(Q)**: Bae posts some crazy things, at times. Is this app for me? \
-**(A)**: _Know Thy Bae. Blind support, of anything, carries inherent risks._
+**(A)**: _Know Thy bae. Blind support, of anything, carries inherent risks._
 _If you're worried about perceptions, this may not be the solution for you._
 
 **(Q)**: I don't have _bae_ status. Can I still use this app? \
 **(A)**: _Absolutely. InstaBae fully recognizes useage amongst friends, as well._
 ***
-
-For the most recent developments, please see branch [DEV](https://github.com/Celshade/InstaBae/tree/dev).
 
 Care to drop some feedback or found a bug? See the link, below. \
 _Comments & bugs -> https://www.github.com/Celshade/InstaBae/issues_
