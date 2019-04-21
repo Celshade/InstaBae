@@ -3,11 +3,11 @@
 [![built with Python3](https://img.shields.io/badge/built%20with-Python3-green.svg)](https://www.python.org/)
 [![built with Selenium](https://img.shields.io/badge/built%20with-Selenium-orange.svg)](https://github.com/SeleniumHQ/selenium)
 
-_Automatically like your [wo]man's pictures on Instagram._
+_Automatically like Bae's posts on Instagram._
 
 Many of us have very little free time, these days. Many of us also have
 significant others who really LOVE Instagram. A true _bae_ is duty-bound to
-like all of his/her partner's pictures; however, remembering to do so,
+like all of their partner's pictures; however, remembering to do so,
 let alone finding the time, can become a real mission. By default, we already
 support our partners and their goals - however big or small. It is only
 logical that we show support to their insta-endevours, as well!
@@ -40,7 +40,7 @@ That's it! InstaBae will take care of the rest, whilst you get back to your coff
 ***
 
 ## FAQ
-**(Q)**: My [wo]man posts some crazy things, at times. Is this app for me? \
+**(Q)**: Bae posts some crazy things, at times. Is this app for me? \
 **(A)**: _Know Thy Bae. Blind support, of anything, carries inherent risks._
 _If you're worried about perceptions, this may not be the solution for you._
 

@@ -1,4 +1,4 @@
-"""Auto like your [wo]man's pictures on instagram.
+"""Automatically like Bae's posts on instagram.
 
 Classes:
     BaeFinder(object): Communicate with Instagram.
@@ -7,6 +7,7 @@ Functions:
     main(): Summon BaeFinder().
 """
 from time import sleep
+from textwrap import dedent
 
 from selenium import webdriver as WEB
 
@@ -14,28 +15,32 @@ from selenium import webdriver as WEB
 class BaeFinder(object):
     """Search Instagram for Bae and like their posts.
 
-    Objects defined in the 'settings' parameter are unpacked into each
+    Objects defined in the 'setting' parameter are unpacked into each
     of BeaFinder's attributes.
 
     Attributes:
-        DRIVER (webdriver): The driver to utilize.
+        BAE (str): The username of the target.
+        USER (str): The username of the user.
+        PASSWORD (str): The password of the user.
+        POSTS (int): The amount of posts to like.
         MODE (str): The mode in which to run.
-        bae (str): The username of the target.
-        depth (int): The amount of posts to like.
-        user (str): The username of the user.
-        passw (str): The password of the user.
+        DRIVER (webdriver): The driver to utilize.
     Public Methods:
         log_in(): Log into Instagram.
-        get_total(): Gather the total number of posts.
+        locate(): Navigate to the target page.
+        get_totals(): Gather the total number of posts.
         scroll_and_grab(): Scroll through the feed and gather post information.
         like_posts(): Like the gathered posts.
         log_out(): Log out of Instagram and close the browser session.
     """
+    # TODO Add ability to store last known total posts and date used.
 
     def __init__(self, settings: tuple) -> None:
-        self.bae, self.user, self.passw, self.MODE, self.DRIVER = settings[1:]
-        self.depth = settings[0]
+        self.BAE, self.USER, self.PASSWORD, self.POSTS, self.MODE = settings
+        self.DRIVER = WEB.Firefox(executable_path="../drivers/geckodriver.exe")
         self._links = []
+        self._total = None
+        self._depth = None
 
         if self.MODE == 'N':
             # TODO Add 'N' MODE
@@ -43,79 +48,83 @@ class BaeFinder(object):
 
     def __repr__(self) -> str:
         """Return session information."""
-        return f"""\n
+        return dedent(f"""
         [Session info]
-        User: {self.user}
-        Bae: {self.bae}
+        User: {self.USER}
+        Bae: {self.BAE}
+        Search Depth: {self.POSTS}
         Mode: Spectator (current default)
-        Browser: FireFox (Geckodriver)\n"""
+        Browser: FireFox (Geckodriver)\n
+        """)
 
-    def log_in(self, wait: float=2.00) -> None:
-        """Open browser, log into Instagram, and navigate to target.
+    def log_in(self, wait: float=2.0) -> None:
+        """Open browser and log into Instagram.
 
         Args:
-            wait: Seconds to sleep between pages (default=2.00).
+            wait: Seconds to sleep before page refresh (default=2.0).
         """
-        GRAM = "https://www.instagram.com/accounts/login/?source=auth_switcher"
-        TARGET = f"https://www.instagram.com/{self.bae}/"
-
         # Open browser -> Instagram
+        GRAM = "https://www.instagram.com/accounts/login/?source=auth_switcher"
         self.DRIVER.get(GRAM)
         sleep(wait)
+
         # Log in
         print("Logging in...")
         username = self.DRIVER.find_element_by_name("username")
         password = self.DRIVER.find_element_by_name("password")
-        username.send_keys(self.user)
-        password.send_keys(self.passw)
+        username.send_keys(self.USER)
+        password.send_keys(self.PASSWORD)
         password.submit()
         sleep(wait)
         # TODO Handle incorrect user/password
 
-        # Navigate to target page
-        print(f"Locating {self.bae}...")
+    def locate(self, wait: float=2.0) -> None:
+        """Navigate to the target page.
+
+        Args:
+            wait: Seconds to sleep before page refresh (default=2.0)
+        """
+        TARGET = f"https://www.instagram.com/{self.BAE}/"
+        print(f"Locating {self.BAE}...")
         self.DRIVER.get(TARGET)
         sleep(wait)
         # TODO Handle TARGET not being found (incorrect username)
         print("Profile located.")
 
-    def get_total(self) -> None:
-        """Find and set the total number of posts."""
+    def get_totals(self) -> None:
+        """Set the total number of posts and search depth."""
         POSTS = self.DRIVER.find_element_by_class_name("g47SY ")
         TOTAL = int(POSTS.get_attribute("textContent").replace(',', ""))
         print(f"Total posts: {TOTAL}\n")
-        self.total = TOTAL
+        self._total = TOTAL
+        self._depth = self._total if self.POSTS == 'A' else int(self.POSTS)
 
     def scroll_and_grab(self) -> list:
-        """Scroll to page bottom and collect a list of all post links."""
+        """Scroll through the feed and gather a list of posts."""
         gather = True
         print("Gathering post information...")
 
         while gather is True:
-            # TODO Like un-liked pictures
             href_path = "//div[@class='v1Nh3 kIKUG  _bz0w']/child::a"
             href_bundle = self.DRIVER.find_elements_by_xpath(href_path)
 
             # Scroll to and grab posts
             for post in href_bundle:
-                href = post.get_attribute("href")  # The full href
+                href = post.get_attribute("href")
                 if href not in self._links:
                     # Scroll to element and add href to links
                     JS_SCROLL_TO = "arguments[0].scrollIntoView();"
                     self.DRIVER.execute_script(JS_SCROLL_TO, post)
                     self._links.append(href)
 
-            if len(self._links) == self.total:
+            if len(self._links) > self._depth:
                 gather = False
         print(f"Gathered posts: {len(self._links)}")
 
     def like_posts(self) -> None:
-        """Inspect each post and attempt to 'like' it."""
-        if self.depth == 'a':
-            self.depth = self.total
-
+        """Inspect and 'like' each post."""
         posts_liked = 0
-        for link in self._links[:self.depth]:
+        for link in self._links[:self._depth]:
             self.DRIVER.get(link)
             heart_path = "//button[@class='dCJp8 afkep _0mzm-']/child::span"
             heart = self.DRIVER.find_element_by_xpath(heart_path)
@@ -132,10 +141,10 @@ class BaeFinder(object):
         """Log out and close the browser.
 
         Args:
-            wait: Seconds to sleep between pages (default=2.00).
+            wait: Seconds to sleep before page refresh (default=2.0)
         """
         print("Logging out...")
-        HOME = f"https://www.instagram.com/{self.user}/"
+        HOME = f"https://www.instagram.com/{self.USER}/"
         SETTINGS = "//button[@class='dCJp8 afkep _0mzm-']"
         LOG_OUT = "//button[text()='Log Out']"
 
@@ -154,25 +163,36 @@ class BaeFinder(object):
 def config() -> tuple:
     """Prompt for user input and return the configuration.
 
-    To be used in conjunction with BaeFinder(), by providing the necessary
-    session information, run-mode, and driver.
+    Used in conjunction with BaeFinder(), by providing the necessary
+    session information.
     """
+    # Introduction
     message = f"Welcome to InstaBae!"
     wrap = '=' * len(message)
-    title = f"\n{wrap}\n{message}\n{wrap}\n"
-    print(title)
+    WELCOME = f"\n{wrap}\n{message}\n{wrap}\n"
+    OPTIONS = dedent("""
+    -----------------------------------------------------------------------
+    MODE  << Enter 'S' for SPECTATOR mode or 'N' for NINJA mode.
+             SPECTATOR shows the process of Instabae. NINJA runs silently.
+    POSTS << Enter a whole number (no punctuation) or 'A' for ALL.
+             (Instabae looks at the most recent posts first.)
+
+             **WARNING** Selecting 'A' searches ALL of the target's posts.
+             Depending on the total number of posts, this may take a while.
+    -----------------------------------------------------------------------
+    """)
+    print(WELCOME, OPTIONS)
 
     # Configuration prompts
-    MODE_TEXT = "('S' for Spectator mode | 'N' for Ninja mode):"
-    DRIVER = WEB.Firefox(executable_path="../drivers/geckodriver.exe")
-    MODE = input("\nEnter your desired MODE {MODE_TEXT}")
-    BAE = input("\nEnter the username of your bae: ")
-    DEPTH = input("Enter the number of posts to like ('A' for ALL -> SLOW!): ")
-    USER = input("Enter your username: ")
-    PASSWORD = input("Enter your password: ")
+    MODE = 'S'  # Current default. TODO Add 'N' mode.
+    print(f"\nEnter your MODE: {MODE}")  # TODO Remove once 'N' mode is added.
+    BAE = input("Enter the username of your BAE: ")
+    POSTS = input("Enter the number of POSTS to like: ")
+    # TODO Add an optimizer
+    USER = input("Enter your USERNAME: ")
+    PASSWORD = input("Enter your PASSWORD: ")
 
-    depth = 'a' if depth.lower() == 'a' else int(depth)
-    return (DRIVER, MODE, BAE, DEPTH, USER, PASSWORD)
+    return (BAE, USER, PASSWORD, POSTS, MODE)
 
 
 def main() -> None:
@@ -182,7 +202,8 @@ def main() -> None:
     try:
         print(session)
         session.log_in()
-        session.get_total()
+        session.locate()
+        session.get_totals()
         session.scroll_and_grab()
         session.like_posts()
     finally:
