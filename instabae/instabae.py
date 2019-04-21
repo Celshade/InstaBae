@@ -137,7 +137,7 @@ class BaeFinder(object):
         else:
             print("No new posts found!")
 
-    def log_out(self, wait: float=2.00) -> None:
+    def log_out(self, wait: float=2.0) -> None:
         """Log out and close the browser.
 
         Args:
@@ -188,7 +188,6 @@ def config() -> tuple:
     print(f"\nEnter your MODE: {MODE}")  # TODO Remove once 'N' mode is added.
     BAE = input("Enter the username of your BAE: ")
     POSTS = input("Enter the number of POSTS to like: ")
-    # TODO Add an optimizer
     USER = input("Enter your USERNAME: ")
     PASSWORD = input("Enter your PASSWORD: ")
 
