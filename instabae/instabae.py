@@ -41,9 +41,8 @@ class BaeFinder(object):
     def __init__(self, settings: tuple, driver: str) -> None:
         self.MODE, self.BAE, self.POSTS, self.USER, self.PWD = settings
         self.DRIVER = WEB.Firefox(executable_path=driver)
+        self._total, self._depth = None, None
         self._links = []
-        self._total = None
-        self._depth = None
 
         if self.MODE == 'N':
             # TODO Add 'N' MODE
@@ -172,7 +171,7 @@ def config() -> tuple:
     session information.
     """
     # Configuration prompts
-    print("\n<<Please configuration your session>>\n")
+    print("\n<<Please configure your session>>\n")
     MODE = 'S'  # TODO Remove default
     print(f"Enter your MODE: {MODE}")  # TODO Convert to input()
     BAE = input("Enter the username of your BAE: ")
