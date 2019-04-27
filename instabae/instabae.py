@@ -25,7 +25,7 @@ class BaeFinder(object):
     Attributes:
         MODE (str): The mode in which to run.
         BAE (str): The username of the target.
-        POSTS (int): The amount of posts to like.
+        POSTS (int/str): The number of posts to like or 'A' for ALL posts.
         USER (str): The username of the user.
         PWD (str): The password of the user.
         DRIVER (webdriver): The driver to utilize.
@@ -33,7 +33,7 @@ class BaeFinder(object):
         log_in(): Log into Instagram.
         locate(): Navigate to the target page.
         get_totals(): Gather the total number of posts.
-        scroll_and_grab(): Scroll through the feed and gather post information.
+        scroll_and_grab(): Scroll through the feed and gather posts.
         like_posts(): Like the gathered posts.
         log_out(): Log out of Instagram and close the browser session.
     """
@@ -58,7 +58,7 @@ class BaeFinder(object):
         Bae: {self.BAE}
         Search Depth: {"All" if self.POSTS == 'A' else self.POSTS}
         Mode: Spectator (current default)
-        Browser: FireFox (Geckodriver)\n
+        Browser: FireFox (geckodriver)\n
         ===================================
         """)
 
@@ -95,7 +95,7 @@ class BaeFinder(object):
         self.DRIVER.get(TARGET)
         time.sleep(wait)
         print("Profile located.")
-        # TODO Handle TARGET not being found (incorrect username)
+        # TODO Handle TARGET not being found (incorrect username for BAE)
 
     def get_totals(self) -> None:
         """Set the total number of posts and search depth."""
@@ -157,9 +157,8 @@ class BaeFinder(object):
         # Nav to USER's profile
         self.DRIVER.get(HOME)
         time.sleep(wait)
-        # Find settings
-        self.DRIVER.find_element_by_xpath(SETTINGS).click()
         # Loggout and close browser.
+        self.DRIVER.find_element_by_xpath(SETTINGS).click()
         self.DRIVER.find_element_by_xpath(LOG_OUT).click()
         time.sleep(wait)
         self.DRIVER.quit()
@@ -174,8 +173,8 @@ def config() -> tuple:
     """
     # Configuration prompts
     print("\n<<Please configuration your session>>\n")
-    MODE = 'S'  # TODO Remove once modes are fully implemented
-    print(f"Enter your MODE: {MODE}")  # TODO Convert to input() after MODE fix
+    MODE = 'S'  # TODO Remove default
+    print(f"Enter your MODE: {MODE}")  # TODO Convert to input()
     BAE = input("Enter the username of your BAE: ")
     POSTS = input("Enter the number of POSTS to like: ")
     USER = input("Enter your USERNAME: ")

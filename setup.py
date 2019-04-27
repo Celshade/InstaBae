@@ -11,11 +11,10 @@ NAME = "InstaBae"
 DESCRIPTION = "A way to automatically like bae\'s posts."
 URL = "https://github.com/Celshade/InstaBae"
 EMAIL = "ggcelshade@gmail.com"
-AUTHOR = "Danny 'Celshade' Collins"
+AUTHOR = "Danny Collins"
 REQUIRES_PYTHON = ">=3.6"
-VERSION = "0.0.7"
+VERSION = "0.1.0"
 REQUIRES = ["selenium"]
-# TODO Include drivers in build.
 
 # README handling
 try:
@@ -39,7 +38,7 @@ setup(
     long_description_content_type="text/markdown",
     license="GNU GPLv3 License",
     classifiers=[
-        "Development Status :: 3 - Alpha",
+        "Development Status :: 4 - Beta",
         "Environment :: Terminal/Shell",
         "Intended Audience :: End Users/Desktop"
         "Intended Audience :: Developers",
