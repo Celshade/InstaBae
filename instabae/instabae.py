@@ -7,7 +7,6 @@ Functions:
     main(): Summon BaeFinder().
 """
 import os
-import sys
 import time
 from getpass import getpass
 from textwrap import dedent
@@ -126,7 +125,7 @@ class BaeFinder(object):
 
     def like_posts(self) -> None:
         """Inspect and 'like' each post."""
-        print(f"Attempting to like the [{self._depth}] most recent posts...")
+        print(f"Checking the [{self._depth}] most recent posts...")
         posts_liked = 0
 
         for link in self._links[:self._depth]:
@@ -189,12 +188,11 @@ def config() -> tuple:
             print("Please enter a valid number or 'A' to search ALL posts.")
             POSTS = input("Enter the number of POSTS to like: ")
 
-    # Attempt to clear the terminal window on WINDOWS and LINUX
-    if sys.platform.startswith("win"):
-        os.system("cls")
-    elif sys.platform.startswith("lin"):
-        os.system("clear")
-    return (MODE, BAE, POSTS, USER, PASSWORD)
+    # Attempt to clear the terminal window
+    try:
+        os.system("cls||clear")
+    finally:
+        return (MODE, BAE, POSTS, USER, PASSWORD)
 
 
 def main() -> None:
