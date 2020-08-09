@@ -164,22 +164,34 @@ class BaeFinder(object):
 
 
 def config() -> tuple:
-    """Establish and return the configuration for BaeFinder().
+    """Configure and return session information for BaeFinder()."""
+    print(dedent("""
+    ----------------------------CONFIGURATION---------------------------------
+    MODE  << **Not yet implemented**
+             Enter 'S' for SPECTATOR mode or 'N' for NINJA mode.
+             SPECTATOR shows the process of Instabae. NINJA runs silently.
+    BAE   << Enter the username of your target.
+    POSTS << Enter a whole number (no punctuation) or 'A' for ALL.
+             (Instabae looks at the most recent posts first.)
 
-    Used in conjunction with BaeFinder(), by providing the necessary
-    session information.
-    """
-    # Configuration prompts
-    print("\n<<Please configure your session>>\n")
+             **WARNING** Selecting 'A' searches ALL of the target's posts.
+             Depending on the total number of posts, this may take a while.
+    USER  << Enter your username.
+    PWD   << Enter your password.
+    --------------------------------------------------------------------------
+
+    <<Please configure your session>>
+    """), end='\n')
+
     MODE = 'S'  # TODO Remove default
     print(f"Enter your MODE: {MODE}")  # TODO Convert to input()
     BAE = input("Enter the username of your BAE: ")
     POSTS = input("Enter the number of POSTS to like: ")
     USER = input("Enter your USERNAME: ")
     PASSWORD = getpass("Enter your PASSWORD: ")
-    optimized = False
 
     # Optimize POSTS
+    optimized = False
     while optimized is False:
         try:
             POSTS = 'A' if POSTS.upper() == 'A' else int(POSTS)
@@ -196,29 +208,14 @@ def config() -> tuple:
 
 
 def main() -> None:
-    """Introduce the program and summon BaeFinder()."""
-    # Introduction
+    """Summon BaeFinder()."""
     message = f"Welcome to InstaBae!"
     wrap = '=' * len(message)
     WELCOME = f"\n{wrap}\n{message}\n{wrap}\n"
-    OPTIONS = dedent("""
-    ----------------------------CONFIGURATION---------------------------------
-    MODE  << **Not yet implemented**
-             Enter 'S' for SPECTATOR mode or 'N' for NINJA mode.
-             SPECTATOR shows the process of Instabae. NINJA runs silently.
-    BAE   << Enter the username of your target.
-    POSTS << Enter a whole number (no punctuation) or 'A' for ALL.
-             (Instabae looks at the most recent posts first.)
-
-             **WARNING** Selecting 'A' searches ALL of the target's posts.
-             Depending on the total number of posts, this may take a while.
-    USER  << Enter your username.
-    PWD   << Enter your password.
-    --------------------------------------------------------------------------
-    """)
-    print(WELCOME, OPTIONS)
+    print(WELCOME)
     session = BaeFinder(config(), "../drivers/geckodriver.exe")
 
+    # Run session.
     try:
         print(session)
         session.log_in()
@@ -228,6 +225,7 @@ def main() -> None:
         session.like_posts()
     finally:
         session.log_out()
+
 
 if __name__ == "__main__":
     main()
