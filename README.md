@@ -5,7 +5,7 @@
 
 _Automatically like bae's posts on Instagram._
 
-Many of us have very little free time, these days. Many of us also have
+Many of us have trouble finding extra free time. Many of us also have
 significant others who really LOVE Instagram. A true _bae_ is duty-bound to
 like all of their partner's pictures; however, remembering to do so,
 let alone finding the time, can become a real mission. By default, we already
@@ -28,13 +28,13 @@ due to extensive use. **Use at your own risk.**
 
 ## Instructions
 Once the requirements are met, simply download the package, navigate to the directory,
-and run `./instabae/instabae.py`. Before the magic happens, you will be met with a
+and run `./src/instabae.py`. Before the magic happens, you will be met with a
 short series of prompts where you'll configure your session (run mode, the username
-of your target bae, how many posts you wish to 'like', and login credentials).
+of your target bae, how many posts you wish to 'like', and your login credentials).
 
-### Modes (*Not fully implemented! Default will run in Spectator mode)
-* **Spectator** - allows you to watch what is happening, on screen.
-* **Ninja** - will simply run everything in the shadows (background).
+### Modes (*Ninja mode is not yet implemented. The program will default to Spectator mode)
+* **Spectator** - allows you to watch what is happening (on screen).
+* **Ninja** - runs everything in the shadows (background).
 
 That's it! InstaBae will take care of the rest, whilst you get back to your coffee.
 ***

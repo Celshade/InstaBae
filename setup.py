@@ -13,7 +13,7 @@ URL = "https://github.com/Celshade/InstaBae"
 EMAIL = "ggcelshade@gmail.com"
 AUTHOR = "Danny Collins"
 REQUIRES_PYTHON = ">=3.6"
-VERSION = "1.0.1"
+VERSION = "1.0.2"
 REQUIRES = ["selenium"]
 
 # README handling
