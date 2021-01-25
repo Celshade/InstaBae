@@ -13,7 +13,7 @@ URL = "https://github.com/Celshade/InstaBae"
 EMAIL = "ggcelshade@gmail.com"
 AUTHOR = "Danny Collins"
 REQUIRES_PYTHON = ">=3.6"
-VERSION = "1.0.0"
+VERSION = "1.0.1"
 REQUIRES = ["selenium"]
 
 # README handling
@@ -46,11 +46,11 @@ setup(
         "License :: OSI approved :: GNU GPLv3 License",
         "Operating System :: Microsoft :: Windows",
         "Programming Language :: Python :: 3.6"
-        ],
+    ],
     keywords="automation testing instagram InstaBae",
     project_urls={
         "Comments": "https://github.com/Celshade/InstaBae/issues/1",
         "Bug Reports": "https://github.com/Celshade/InstaBae/issues/2",
         "Source": "https://github.com/Celshade/InstaBae"
-        }
+    }
 )
