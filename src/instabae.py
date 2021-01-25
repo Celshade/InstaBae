@@ -130,7 +130,7 @@ class BaeFinder(object):
 
         for link in self._links[:self._depth]:
             self.DRIVER.get(link)
-            HEART_PATH = "//div[@class='QBdPU ']"
+            HEART_PATH = "//div[@class='QBdPU ']/span/*[local-name()='svg']"
             heart = self.DRIVER.find_element_by_xpath(HEART_PATH)
             if heart.get_attribute("aria-label") == "Like":
                 heart.click()
