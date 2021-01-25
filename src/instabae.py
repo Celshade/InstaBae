@@ -60,7 +60,7 @@ class BaeFinder(object):
         ===================================
         """)
 
-    def log_in(self, wait: float=2.0) -> None:
+    def log_in(self, wait: float=2.25) -> None:
         """Open browser and log into Instagram.
 
         Args:
