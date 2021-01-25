@@ -130,8 +130,8 @@ class BaeFinder(object):
 
         for link in self._links[:self._depth]:
             self.DRIVER.get(link)
-            heart_path = "//button[@class='dCJp8 afkep _0mzm-']/child::span"
-            heart = self.DRIVER.find_element_by_xpath(heart_path)
+            HEART_PATH = "//div[@class='QBdPU ']"
+            heart = self.DRIVER.find_element_by_xpath(HEART_PATH)
             if heart.get_attribute("aria-label") == "Like":
                 heart.click()
                 posts_liked += 1
@@ -149,18 +149,20 @@ class BaeFinder(object):
         """
         print("\nLogging out...")
         HOME = f"https://www.instagram.com/{self.USER}/"
-        SETTINGS = "//button[@class='dCJp8 afkep _0mzm-']"
+        OPTIONS = "//div[@class='AFWDX']"
         LOG_OUT = "//button[text()='Log Out']"
 
         # Nav to USER's profile
         self.DRIVER.get(HOME)
         time.sleep(wait)
+
         # Loggout and close browser.
-        self.DRIVER.find_element_by_xpath(SETTINGS).click()
+        self.DRIVER.find_element_by_xpath(OPTIONS).click()
+        time.sleep(1)
         self.DRIVER.find_element_by_xpath(LOG_OUT).click()
         time.sleep(wait)
         self.DRIVER.quit()
-        print("Session closed successfully!")
+        print("Session closed successfully!", end='\n')
 
 
 def config() -> tuple:
